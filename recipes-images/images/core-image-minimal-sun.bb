@@ -7,7 +7,7 @@ IMAGE_LINGUAS = " "
 LICENSE = "MIT"
 inherit core-image
 
-IMAGE_ROOTFS_SIZE = "100000"
+IMAGE_ROOTFS_EXTRA_SPACE_append = " + 40960"
 
 IMAGE_FEATURES_remove = "ssh-server-dropbear"
 IMAGE_FEATURES += "ssh-server-openssh"
@@ -26,15 +26,16 @@ TOOLS = "\
     procps \
     strace \
     usbutils \
+    vim \
+"
+NETTOOLS = "\
+    iproute2 \
+    openssh-sftp-server \
 "
 
 IMAGE_INSTALL += "\
-    iproute2 \
-    vim \
-    openvpn \
-    openssh-sftp-server \
-    e2fsprogs \
-    gdbserver \
     kernel-modules \
+    ${NETTOOLS} \
     ${TOOLS} \
+    \
 "
