@@ -34,6 +34,7 @@ WIFITOOLS = "\
     crda \
     wireless-tools \
     wpa-supplicant \
+    xradio-firmware \
 "
 
 NETTOOLS = "\
@@ -46,9 +47,14 @@ DEVTOOLS = "\
     ncurses \
 "
 
+DOMOTIC = "\
+    domoticz \
+"
+
 IMAGE_INSTALL += "\
     kernel-modules \
     ${NETTOOLS} \
     ${TOOLS} \
     ${DEVTOOLS} \
+    ${DOMOTIC} \
 "
