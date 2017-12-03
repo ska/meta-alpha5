@@ -27,15 +27,28 @@ TOOLS = "\
     strace \
     usbutils \
     vim \
+    util-linux \
 "
+WIFITOOLS = "\
+    iw \
+    crda \
+    wireless-tools \
+    wpa-supplicant \
+"
+
 NETTOOLS = "\
     iproute2 \
     openssh-sftp-server \
+    ${WIFITOOLS} \
+"
+
+DEVTOOLS = "\
+    ncurses \
 "
 
 IMAGE_INSTALL += "\
     kernel-modules \
     ${NETTOOLS} \
     ${TOOLS} \
-    \
+    ${DEVTOOLS} \
 "

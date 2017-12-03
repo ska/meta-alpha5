@@ -10,12 +10,14 @@ require linux.inc
 
 # Pull in the devicetree files into the rootfs
 RDEPENDS_kernel-base += "kernel-devicetree"
+DEPENDS += " util-linux"
 
 KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 
 S = "${WORKDIR}/git"
 	
 SRC_URI = "git://github.com/montjoie/linux.git;protocol=git;branch=dwmac-sun8i-current \
+           file://0001-Added-Wifi.patch \
            file://defconfig \
 "
 SRCREV = "575e2c13a742899221689abba85f221f494761b4"
