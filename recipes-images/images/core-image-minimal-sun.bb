@@ -1,6 +1,5 @@
-SUMMARY = "A small image just capable of allowing a device to boot."
-DESCRIPTION = "A small image just capable of allowing a device to boot and \
-is suitable for development work."
+SUMMARY = ""
+DESCRIPTION = ""
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 IMAGE_LINGUAS = " "
@@ -26,8 +25,6 @@ TOOLS = "\
     procps \
     strace \
     usbutils \
-    vim \
-    util-linux \
 "
 WIFITOOLS = "\
     iw \
@@ -51,10 +48,17 @@ DOMOTIC = "\
     domoticz \
 "
 
+UTILS = "\
+    gnuplot \
+    vim \
+    util-linux \
+"
+
 IMAGE_INSTALL += "\
     kernel-modules \
     ${NETTOOLS} \
     ${TOOLS} \
     ${DEVTOOLS} \
     ${DOMOTIC} \
+    ${UTILS} \
 "

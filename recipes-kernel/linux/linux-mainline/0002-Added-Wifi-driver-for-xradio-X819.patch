@@ -1,57 +1,53 @@
-From 268b541ebf22704cf86eac8d36f71556f775c77b Mon Sep 17 00:00:00 2001
+From 6e18ff1170094a78f1b8548bf958e5e49e7b3a2e Mon Sep 17 00:00:00 2001
 From: Luigi Scagnet Ska <luigi.scagnet@gmail.com>
-Date: Sun, 3 Dec 2017 12:21:35 +0100
-Subject: [PATCH] Added wifi
+Date: Tue, 6 Feb 2018 23:33:15 +0100
+Subject: [PATCH] Added Wifi driver for xradio X819
 
 ---
- arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts  |   36 +-
- arch/arm/boot/dts/sun8i-h3-nanopi-m1-plus.dts      |    2 +-
- arch/arm/configs/sunxi_defconfig                   |   22 +
- drivers/net/wireless/Kconfig                       |    1 +
- drivers/net/wireless/Makefile                      |    1 +
- drivers/net/wireless/xradio/Kconfig                |   46 +
- drivers/net/wireless/xradio/LICENSE                |  339 +++
- drivers/net/wireless/xradio/Makefile               |   52 +
- drivers/net/wireless/xradio/README.md              |  178 ++
- drivers/net/wireless/xradio/ap.c                   | 1624 +++++++++++
- drivers/net/wireless/xradio/ap.h                   |   63 +
- drivers/net/wireless/xradio/bh.c                   |  836 ++++++
- drivers/net/wireless/xradio/bh.h                   |   36 +
- drivers/net/wireless/xradio/common.h               |  101 +
- drivers/net/wireless/xradio/debug.h                |   22 +
- drivers/net/wireless/xradio/fwio.c                 |  560 ++++
- drivers/net/wireless/xradio/fwio.h                 |   33 +
- drivers/net/wireless/xradio/ht.c                   |   86 +
- drivers/net/wireless/xradio/ht.h                   |   44 +
- drivers/net/wireless/xradio/hwio.c                 |  280 ++
- drivers/net/wireless/xradio/hwio.h                 |  229 ++
- drivers/net/wireless/xradio/keys.c                 |  193 ++
- drivers/net/wireless/xradio/keys.h                 |   12 +
- drivers/net/wireless/xradio/main.c                 |  611 ++++
- drivers/net/wireless/xradio/main.h                 |    7 +
- drivers/net/wireless/xradio/module.c               |   27 +
- drivers/net/wireless/xradio/p2p.c                  |   62 +
- drivers/net/wireless/xradio/p2p.h                  |    6 +
- drivers/net/wireless/xradio/pm.c                   |  800 ++++++
- drivers/net/wireless/xradio/pm.h                   |   64 +
- drivers/net/wireless/xradio/queue.c                |  822 ++++++
- drivers/net/wireless/xradio/queue.h                |  139 +
- drivers/net/wireless/xradio/rx.c                   |  397 +++
- drivers/net/wireless/xradio/rx.h                   |    8 +
- drivers/net/wireless/xradio/scan.c                 |  897 ++++++
- drivers/net/wireless/xradio/scan.h                 |   71 +
- drivers/net/wireless/xradio/sdio.c                 |  240 ++
- drivers/net/wireless/xradio/sdio.h                 |   17 +
- drivers/net/wireless/xradio/sta.c                  | 2201 ++++++++++++++
- drivers/net/wireless/xradio/sta.h                  |  122 +
- .../xradio/sun8i-h2-plus-orangepi-zero.dts         |  203 ++
- drivers/net/wireless/xradio/tx.c                   | 1454 ++++++++++
- drivers/net/wireless/xradio/tx.h                   |   88 +
- drivers/net/wireless/xradio/wsm.c                  | 3004 ++++++++++++++++++++
- drivers/net/wireless/xradio/wsm.h                  | 2354 +++++++++++++++
- drivers/net/wireless/xradio/xradio.h               |  577 ++++
- net/wireless/reg.c                                 |    4 +-
- 47 files changed, 18963 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts |   38 +-
+ drivers/net/wireless/Kconfig                      |    1 +
+ drivers/net/wireless/Makefile                     |    1 +
+ drivers/net/wireless/xradio/Kconfig               |   46 +
+ drivers/net/wireless/xradio/LICENSE               |  339 +++
+ drivers/net/wireless/xradio/Makefile              |   52 +
+ drivers/net/wireless/xradio/README.md             |  178 ++
+ drivers/net/wireless/xradio/ap.c                  | 1624 +++++++++++
+ drivers/net/wireless/xradio/ap.h                  |   63 +
+ drivers/net/wireless/xradio/bh.c                  |  836 ++++++
+ drivers/net/wireless/xradio/bh.h                  |   36 +
+ drivers/net/wireless/xradio/common.h              |  101 +
+ drivers/net/wireless/xradio/debug.h               |   22 +
+ drivers/net/wireless/xradio/fwio.c                |  560 ++++
+ drivers/net/wireless/xradio/fwio.h                |   33 +
+ drivers/net/wireless/xradio/ht.c                  |   86 +
+ drivers/net/wireless/xradio/ht.h                  |   44 +
+ drivers/net/wireless/xradio/hwio.c                |  280 ++
+ drivers/net/wireless/xradio/hwio.h                |  229 ++
+ drivers/net/wireless/xradio/keys.c                |  193 ++
+ drivers/net/wireless/xradio/keys.h                |   12 +
+ drivers/net/wireless/xradio/main.c                |  611 +++++
+ drivers/net/wireless/xradio/main.h                |    7 +
+ drivers/net/wireless/xradio/module.c              |   27 +
+ drivers/net/wireless/xradio/p2p.c                 |   62 +
+ drivers/net/wireless/xradio/p2p.h                 |    6 +
+ drivers/net/wireless/xradio/pm.c                  |  800 ++++++
+ drivers/net/wireless/xradio/pm.h                  |   64 +
+ drivers/net/wireless/xradio/queue.c               |  822 ++++++
+ drivers/net/wireless/xradio/queue.h               |  139 +
+ drivers/net/wireless/xradio/rx.c                  |  397 +++
+ drivers/net/wireless/xradio/rx.h                  |    8 +
+ drivers/net/wireless/xradio/scan.c                |  897 ++++++
+ drivers/net/wireless/xradio/scan.h                |   71 +
+ drivers/net/wireless/xradio/sdio.c                |  241 ++
+ drivers/net/wireless/xradio/sdio.h                |   17 +
+ drivers/net/wireless/xradio/sta.c                 | 2201 +++++++++++++++
+ drivers/net/wireless/xradio/sta.h                 |  122 +
+ drivers/net/wireless/xradio/tx.c                  | 1454 ++++++++++
+ drivers/net/wireless/xradio/tx.h                  |   88 +
+ drivers/net/wireless/xradio/wsm.c                 | 3004 +++++++++++++++++++++
+ drivers/net/wireless/xradio/wsm.h                 | 2354 ++++++++++++++++
+ drivers/net/wireless/xradio/xradio.h              |  577 ++++
+ 43 files changed, 18738 insertions(+), 5 deletions(-)
  create mode 100644 drivers/net/wireless/xradio/Kconfig
  create mode 100644 drivers/net/wireless/xradio/LICENSE
  create mode 100644 drivers/net/wireless/xradio/Makefile
@@ -87,7 +83,6 @@ Subject: [PATCH] Added wifi
  create mode 100644 drivers/net/wireless/xradio/sdio.h
  create mode 100644 drivers/net/wireless/xradio/sta.c
  create mode 100644 drivers/net/wireless/xradio/sta.h
- create mode 100644 drivers/net/wireless/xradio/sun8i-h2-plus-orangepi-zero.dts
  create mode 100644 drivers/net/wireless/xradio/tx.c
  create mode 100644 drivers/net/wireless/xradio/tx.h
  create mode 100644 drivers/net/wireless/xradio/wsm.c
@@ -95,10 +90,19 @@ Subject: [PATCH] Added wifi
  create mode 100644 drivers/net/wireless/xradio/xradio.h
 
 diff --git a/arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts b/arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts
-index 6713d0f2b3f4..ded1e6e597e7 100644
+index f0a7130..5952055 100644
 --- a/arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts
 +++ b/arch/arm/boot/dts/sun8i-h2-plus-orangepi-zero.dts
-@@ -82,17 +82,20 @@
+@@ -56,6 +56,8 @@
+ 
+ 	aliases {
+ 		serial0 = &uart0;
++		/* ethernet0 is the H3 emac, defined in sun8i-h3.dtsi */
++		ethernet0 = &emac;
+ 		ethernet1 = &xr819;
+ 	};
+ 
+@@ -80,17 +82,20 @@
  
  	reg_vcc_wifi: reg_vcc_wifi {
  		compatible = "regulator-fixed";
@@ -110,7 +114,7 @@ index 6713d0f2b3f4..ded1e6e597e7 100644
 +		regulator-name = "wifi";
  		enable-active-high;
  		gpio = <&pio 0 20 GPIO_ACTIVE_HIGH>;
-+        startup-delay-us = <70000>;
++		startup-delay-us = <70000>;
  	};
  
  	wifi_pwrseq: wifi_pwrseq {
@@ -118,100 +122,57 @@ index 6713d0f2b3f4..ded1e6e597e7 100644
  		reset-gpios = <&r_pio 0 7 GPIO_ACTIVE_LOW>;
 -		post-power-on-delay-ms = <200>;
 +		post-power-on-delay-ms = <50>;
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&wifi_rst>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&wifi_rst>;
  	};
  };
  
-@@ -124,9 +127,11 @@
+@@ -122,9 +127,11 @@
  &mmc1 {
  	pinctrl-names = "default";
  	pinctrl-0 = <&mmc1_pins_a>;
 -	vmmc-supply = <&reg_vcc_wifi>;
 +	vqmmc-supply = <&reg_vcc_wifi>;
-+    vmmc-supply = <&reg_vcc3v3>;
++	vmmc-supply = <&reg_vcc3v3>;
  	mmc-pwrseq = <&wifi_pwrseq>;
  	bus-width = <4>;
-+    max-frequency = <16000000>;
++	max-frequency = <16000000>;
  	non-removable;
  	status = "okay";
  
-@@ -136,9 +141,30 @@
+@@ -134,9 +141,30 @@
  	 */
  	xr819: sdio_wifi@1 {
  		reg = <1>;
-+        compatible = "xradio,xr819";
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&wifi_wake>;
-+        interrupt-parent = <&pio>;
-+        interrupts = <6 10 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "host-wake";
-+        local-mac-address = [dc 44 6d c0 ff ee];
++		compatible = "xradio,xr819";
++		pinctrl-names = "default";
++		pinctrl-0 = <&wifi_wake>;
++		interrupt-parent = <&pio>;
++		interrupts = <6 10 IRQ_TYPE_EDGE_RISING>;
++		interrupt-names = "host-wake";
++		local-mac-address = [dc 44 6d c0 ff ee];
  	};
  };
  
 +&pio {
-+    wifi_wake: wifi_wake {
-+        pins = "PG10";
-+        function = "gpio_in";
++	wifi_wake: wifi_wake {
++		pins = "PG10";
++		function = "gpio_in";
 +    };
 +};
 +
 +&r_pio {
-+    wifi_rst: wifi_rst {
-+        pins = "PL7";
-+        function = "gpio_out";
++	wifi_rst: wifi_rst {
++		pins = "PL7";
++		function = "gpio_out";
 +    };
 +};
 +
  &mmc1_pins_a {
  	bias-pull-up;
  };
-diff --git a/arch/arm/boot/dts/sun8i-h3-nanopi-m1-plus.dts b/arch/arm/boot/dts/sun8i-h3-nanopi-m1-plus.dts
-index cfb96da3cfef..46e4c454d976 100644
---- a/arch/arm/boot/dts/sun8i-h3-nanopi-m1-plus.dts
-+++ b/arch/arm/boot/dts/sun8i-h3-nanopi-m1-plus.dts
-@@ -69,7 +69,7 @@
- &emac {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&emac_rgmii_pins>;
--	phy-supply = <&reg_gmac_3v3>;
-+//	phy-supply = <&reg_gmac_3v3>;
- 	phy-handle = <&ext_rgmii_phy>;
- 	phy-mode = "rgmii";
- 
-diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
-index 5caaf971fb50..d06ea660cc03 100644
---- a/arch/arm/configs/sunxi_defconfig
-+++ b/arch/arm/configs/sunxi_defconfig
-@@ -149,3 +149,25 @@ CONFIG_NLS_ISO8859_1=y
- CONFIG_PRINTK_TIME=y
- CONFIG_DEBUG_FS=y
- CONFIG_CRYPTO_DEV_SUN4I_SS=y
-+#Test XRADIO
-+CONFIG_WIRELESS=y
-+CONFIG_CFG80211=m
-+CONFIG_NL80211_TESTMODE=y
-+CONFIG_CFG80211_DEVELOPER_WARNINGS=y
-+CONFIG_CFG80211_REQUIRE_SIGNED_REGDB=y
-+CONFIG_CFG80211_USE_KERNEL_REGDB_KEYS=y
-+CONFIG_CFG80211_DEFAULT_PS=y
-+CONFIG_MAC80211=m
-+CONFIG_MAC80211_HAS_RC=y
-+CONFIG_MAC80211_RC_MINSTREL=y
-+CONFIG_MAC80211_RC_MINSTREL_HT=y
-+CONFIG_MAC80211_RC_DEFAULT_MINSTREL=y
-+CONFIG_MAC80211_RC_DEFAULT="minstrel_ht"
-+CONFIG_MAC80211_LEDS=y
-+CONFIG_MAC80211_STA_HASH_MAX_SIZE=0
-+CONFIG_WLAN=y
-+CONFIG_XRADIO=m
-+CONFIG_XRADIO_NON_POWER_OF_TWO_BLOCKSIZES=y
-+CONFIG_XRADIO_5GHZ_SUPPORT=y
-+CONFIG_XRADIO_WAPI_SUPPORT=y
-+CONFIG_XRADIO_USE_EXTENSIONS=y
 diff --git a/drivers/net/wireless/Kconfig b/drivers/net/wireless/Kconfig
-index 166920ae23f8..af87874258f0 100644
+index 166920a..af87874 100644
 --- a/drivers/net/wireless/Kconfig
 +++ b/drivers/net/wireless/Kconfig
 @@ -46,6 +46,7 @@ source "drivers/net/wireless/st/Kconfig"
@@ -223,10 +184,10 @@ index 166920ae23f8..af87874258f0 100644
  config PCMCIA_RAYCS
  	tristate "Aviator/Raytheon 2.4GHz wireless support"
 diff --git a/drivers/net/wireless/Makefile b/drivers/net/wireless/Makefile
-index 54b41ac5f9c8..e37d9c48714d 100644
+index 7fc9630..66a3b6b 100644
 --- a/drivers/net/wireless/Makefile
 +++ b/drivers/net/wireless/Makefile
-@@ -18,6 +18,7 @@ obj-$(CONFIG_WLAN_VENDOR_ST) += st/
+@@ -19,6 +19,7 @@ obj-$(CONFIG_WLAN_VENDOR_ST) += st/
  obj-$(CONFIG_WLAN_VENDOR_TI) += ti/
  obj-$(CONFIG_WLAN_VENDOR_ZYDAS) += zydas/
  obj-$(CONFIG_WLAN_VENDOR_QUANTENNA) += quantenna/
@@ -236,7 +197,7 @@ index 54b41ac5f9c8..e37d9c48714d 100644
  obj-$(CONFIG_PCMCIA_RAYCS)	+= ray_cs.o
 diff --git a/drivers/net/wireless/xradio/Kconfig b/drivers/net/wireless/xradio/Kconfig
 new file mode 100644
-index 000000000000..7244e5f54c80
+index 0000000..7244e5f
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/Kconfig
 @@ -0,0 +1,46 @@
@@ -288,7 +249,7 @@ index 000000000000..7244e5f54c80
 +endif
 diff --git a/drivers/net/wireless/xradio/LICENSE b/drivers/net/wireless/xradio/LICENSE
 new file mode 100644
-index 000000000000..23cb790338e1
+index 0000000..23cb790
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/LICENSE
 @@ -0,0 +1,339 @@
@@ -633,7 +594,7 @@ index 000000000000..23cb790338e1
 +Public License instead of this License.
 diff --git a/drivers/net/wireless/xradio/Makefile b/drivers/net/wireless/xradio/Makefile
 new file mode 100644
-index 000000000000..fd15d3106a91
+index 0000000..fd15d31
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/Makefile
 @@ -0,0 +1,52 @@
@@ -691,7 +652,7 @@ index 000000000000..fd15d3106a91
 +obj-$(CONFIG_XRADIO) += xradio_wlan.o
 diff --git a/drivers/net/wireless/xradio/README.md b/drivers/net/wireless/xradio/README.md
 new file mode 100644
-index 000000000000..5613982f7084
+index 0000000..5613982
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/README.md
 @@ -0,0 +1,178 @@
@@ -875,7 +836,7 @@ index 000000000000..5613982f7084
 +get thousands and thousands of lines of code signed off.
 diff --git a/drivers/net/wireless/xradio/ap.c b/drivers/net/wireless/xradio/ap.c
 new file mode 100644
-index 000000000000..6487b3e2befe
+index 0000000..6487b3e
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/ap.c
 @@ -0,0 +1,1624 @@
@@ -2505,7 +2466,7 @@ index 000000000000..6487b3e2befe
 +#endif
 diff --git a/drivers/net/wireless/xradio/ap.h b/drivers/net/wireless/xradio/ap.h
 new file mode 100644
-index 000000000000..ca05bffeaeb1
+index 0000000..ca05bff
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/ap.h
 @@ -0,0 +1,63 @@
@@ -2574,7 +2535,7 @@ index 000000000000..ca05bffeaeb1
 +#endif
 diff --git a/drivers/net/wireless/xradio/bh.c b/drivers/net/wireless/xradio/bh.c
 new file mode 100644
-index 000000000000..5b53778d306c
+index 0000000..5b53778
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/bh.c
 @@ -0,0 +1,836 @@
@@ -3416,7 +3377,7 @@ index 000000000000..5b53778d306c
 +}
 diff --git a/drivers/net/wireless/xradio/bh.h b/drivers/net/wireless/xradio/bh.h
 new file mode 100644
-index 000000000000..ca9187e24d91
+index 0000000..ca9187e
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/bh.h
 @@ -0,0 +1,36 @@
@@ -3458,7 +3419,7 @@ index 000000000000..ca9187e24d91
 +#endif /* XRADIO_BH_H */
 diff --git a/drivers/net/wireless/xradio/common.h b/drivers/net/wireless/xradio/common.h
 new file mode 100644
-index 000000000000..1ce23dee0b8a
+index 0000000..1ce23de
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/common.h
 @@ -0,0 +1,101 @@
@@ -3565,7 +3526,7 @@ index 000000000000..1ce23dee0b8a
 +#endif //XRADIO_COMMON_H
 diff --git a/drivers/net/wireless/xradio/debug.h b/drivers/net/wireless/xradio/debug.h
 new file mode 100644
-index 000000000000..30a59f37d4e3
+index 0000000..30a59f3
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/debug.h
 @@ -0,0 +1,22 @@
@@ -3593,7 +3554,7 @@ index 000000000000..30a59f37d4e3
 +#endif /* XRADIO_DEBUG_H_INCLUDED */
 diff --git a/drivers/net/wireless/xradio/fwio.c b/drivers/net/wireless/xradio/fwio.c
 new file mode 100644
-index 000000000000..cfb45eb68bf7
+index 0000000..cfb45eb
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/fwio.c
 @@ -0,0 +1,560 @@
@@ -4159,7 +4120,7 @@ index 000000000000..cfb45eb68bf7
 +}
 diff --git a/drivers/net/wireless/xradio/fwio.h b/drivers/net/wireless/xradio/fwio.h
 new file mode 100644
-index 000000000000..b5efeb15d301
+index 0000000..b5efeb1
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/fwio.h
 @@ -0,0 +1,33 @@
@@ -4198,7 +4159,7 @@ index 000000000000..b5efeb15d301
 +#endif
 diff --git a/drivers/net/wireless/xradio/ht.c b/drivers/net/wireless/xradio/ht.c
 new file mode 100644
-index 000000000000..a9b36300b946
+index 0000000..a9b3630
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/ht.c
 @@ -0,0 +1,86 @@
@@ -4291,7 +4252,7 @@ index 000000000000..a9b36300b946
 \ No newline at end of file
 diff --git a/drivers/net/wireless/xradio/ht.h b/drivers/net/wireless/xradio/ht.h
 new file mode 100644
-index 000000000000..346b425b444b
+index 0000000..346b425
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/ht.h
 @@ -0,0 +1,44 @@
@@ -4341,7 +4302,7 @@ index 000000000000..346b425b444b
 +#endif /* XRADIO_HT_H_INCLUDED */
 diff --git a/drivers/net/wireless/xradio/hwio.c b/drivers/net/wireless/xradio/hwio.c
 new file mode 100644
-index 000000000000..b8133339e7d7
+index 0000000..b813333
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/hwio.c
 @@ -0,0 +1,280 @@
@@ -4627,7 +4588,7 @@ index 000000000000..b8133339e7d7
 +}
 diff --git a/drivers/net/wireless/xradio/hwio.h b/drivers/net/wireless/xradio/hwio.h
 new file mode 100644
-index 000000000000..531c2b8c8bd5
+index 0000000..531c2b8
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/hwio.h
 @@ -0,0 +1,229 @@
@@ -4862,7 +4823,7 @@ index 000000000000..531c2b8c8bd5
 +#endif /* XRADIO_HWIO_H_INCLUDED */
 diff --git a/drivers/net/wireless/xradio/keys.c b/drivers/net/wireless/xradio/keys.c
 new file mode 100644
-index 000000000000..20050e1e75c2
+index 0000000..20050e1
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/keys.c
 @@ -0,0 +1,193 @@
@@ -5061,7 +5022,7 @@ index 000000000000..20050e1e75c2
 +}
 diff --git a/drivers/net/wireless/xradio/keys.h b/drivers/net/wireless/xradio/keys.h
 new file mode 100644
-index 000000000000..23c5880efab4
+index 0000000..23c5880
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/keys.h
 @@ -0,0 +1,12 @@
@@ -5080,7 +5041,7 @@ index 000000000000..23c5880efab4
 \ No newline at end of file
 diff --git a/drivers/net/wireless/xradio/main.c b/drivers/net/wireless/xradio/main.c
 new file mode 100644
-index 000000000000..ff3393ab1ebf
+index 0000000..ff3393a
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/main.c
 @@ -0,0 +1,611 @@
@@ -5697,7 +5658,7 @@ index 000000000000..ff3393ab1ebf
 +}
 diff --git a/drivers/net/wireless/xradio/main.h b/drivers/net/wireless/xradio/main.h
 new file mode 100644
-index 000000000000..2238d7516b58
+index 0000000..2238d75
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/main.h
 @@ -0,0 +1,7 @@
@@ -5711,7 +5672,7 @@ index 000000000000..2238d7516b58
 \ No newline at end of file
 diff --git a/drivers/net/wireless/xradio/module.c b/drivers/net/wireless/xradio/module.c
 new file mode 100644
-index 000000000000..2a41c756f600
+index 0000000..2a41c75
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/module.c
 @@ -0,0 +1,27 @@
@@ -5744,7 +5705,7 @@ index 000000000000..2a41c756f600
 +module_exit(xradio_core_exit);
 diff --git a/drivers/net/wireless/xradio/p2p.c b/drivers/net/wireless/xradio/p2p.c
 new file mode 100644
-index 000000000000..f32fb4331385
+index 0000000..f32fb43
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/p2p.c
 @@ -0,0 +1,62 @@
@@ -5813,7 +5774,7 @@ index 000000000000..f32fb4331385
 \ No newline at end of file
 diff --git a/drivers/net/wireless/xradio/p2p.h b/drivers/net/wireless/xradio/p2p.h
 new file mode 100644
-index 000000000000..d86686b494a9
+index 0000000..d86686b
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/p2p.h
 @@ -0,0 +1,6 @@
@@ -5825,7 +5786,7 @@ index 000000000000..d86686b494a9
 +#endif
 diff --git a/drivers/net/wireless/xradio/pm.c b/drivers/net/wireless/xradio/pm.c
 new file mode 100644
-index 000000000000..c4a87c818156
+index 0000000..c4a87c8
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/pm.c
 @@ -0,0 +1,800 @@
@@ -6631,7 +6592,7 @@ index 000000000000..c4a87c818156
 +#endif
 diff --git a/drivers/net/wireless/xradio/pm.h b/drivers/net/wireless/xradio/pm.h
 new file mode 100644
-index 000000000000..6443cbc41e9b
+index 0000000..6443cbc
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/pm.h
 @@ -0,0 +1,64 @@
@@ -6701,7 +6662,7 @@ index 000000000000..6443cbc41e9b
 +#endif
 diff --git a/drivers/net/wireless/xradio/queue.c b/drivers/net/wireless/xradio/queue.c
 new file mode 100644
-index 000000000000..159206bf683d
+index 0000000..159206b
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/queue.c
 @@ -0,0 +1,822 @@
@@ -7529,7 +7490,7 @@ index 000000000000..159206bf683d
 +}
 diff --git a/drivers/net/wireless/xradio/queue.h b/drivers/net/wireless/xradio/queue.h
 new file mode 100644
-index 000000000000..d6b64ce57327
+index 0000000..d6b64ce
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/queue.h
 @@ -0,0 +1,139 @@
@@ -7674,7 +7635,7 @@ index 000000000000..d6b64ce57327
 +#endif /* XRADIO_QUEUE_H_INCLUDED */
 diff --git a/drivers/net/wireless/xradio/rx.c b/drivers/net/wireless/xradio/rx.c
 new file mode 100644
-index 000000000000..86ec4d29720a
+index 0000000..86ec4d2
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/rx.c
 @@ -0,0 +1,397 @@
@@ -8077,7 +8038,7 @@ index 000000000000..86ec4d29720a
 +}
 diff --git a/drivers/net/wireless/xradio/rx.h b/drivers/net/wireless/xradio/rx.h
 new file mode 100644
-index 000000000000..0c02b23d0cd0
+index 0000000..0c02b23
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/rx.h
 @@ -0,0 +1,8 @@
@@ -8091,7 +8052,7 @@ index 000000000000..0c02b23d0cd0
 +#endif
 diff --git a/drivers/net/wireless/xradio/scan.c b/drivers/net/wireless/xradio/scan.c
 new file mode 100644
-index 000000000000..a8829c08e7ad
+index 0000000..a8829c0
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/scan.c
 @@ -0,0 +1,897 @@
@@ -8994,7 +8955,7 @@ index 000000000000..a8829c08e7ad
 +}
 diff --git a/drivers/net/wireless/xradio/scan.h b/drivers/net/wireless/xradio/scan.h
 new file mode 100644
-index 000000000000..5c520ed20811
+index 0000000..5c520ed
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/scan.h
 @@ -0,0 +1,71 @@
@@ -9071,10 +9032,10 @@ index 000000000000..5c520ed20811
 +#endif
 diff --git a/drivers/net/wireless/xradio/sdio.c b/drivers/net/wireless/xradio/sdio.c
 new file mode 100644
-index 000000000000..8ba838388fe6
+index 0000000..506105e
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/sdio.c
-@@ -0,0 +1,240 @@
+@@ -0,0 +1,241 @@
 +/*
 + * SDIO driver for XRadio drivers
 + *
@@ -9094,6 +9055,7 @@ index 000000000000..8ba838388fe6
 +#include <asm/mach-types.h>
 +#include <linux/of.h>
 +#include <linux/of_irq.h>
++#include <linux/interrupt.h>
 +
 +#include "xradio.h"
 +#include "sdio.h"
@@ -9317,7 +9279,7 @@ index 000000000000..8ba838388fe6
 +MODULE_DEVICE_TABLE(sdio, xradio_sdio_ids);
 diff --git a/drivers/net/wireless/xradio/sdio.h b/drivers/net/wireless/xradio/sdio.h
 new file mode 100644
-index 000000000000..ea3c45a00fcb
+index 0000000..ea3c45a
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/sdio.h
 @@ -0,0 +1,17 @@
@@ -9340,7 +9302,7 @@ index 000000000000..ea3c45a00fcb
 +#endif
 diff --git a/drivers/net/wireless/xradio/sta.c b/drivers/net/wireless/xradio/sta.c
 new file mode 100644
-index 000000000000..a1cb6aeb1d37
+index 0000000..a1cb6ae
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/sta.c
 @@ -0,0 +1,2201 @@
@@ -11547,7 +11509,7 @@ index 000000000000..a1cb6aeb1d37
 +#endif /*ROAM_OFFLOAD*/
 diff --git a/drivers/net/wireless/xradio/sta.h b/drivers/net/wireless/xradio/sta.h
 new file mode 100644
-index 000000000000..7ceed6158e7e
+index 0000000..7ceed61
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/sta.h
 @@ -0,0 +1,122 @@
@@ -11673,218 +11635,9 @@ index 000000000000..7ceed6158e7e
 +                          const void *data, int len, gfp_t gfp);
 +#endif /*ROAM_OFFLOAD*/
 +#endif
-diff --git a/drivers/net/wireless/xradio/sun8i-h2-plus-orangepi-zero.dts b/drivers/net/wireless/xradio/sun8i-h2-plus-orangepi-zero.dts
-new file mode 100644
-index 000000000000..471c27af032b
---- /dev/null
-+++ b/drivers/net/wireless/xradio/sun8i-h2-plus-orangepi-zero.dts
-@@ -0,0 +1,203 @@
-+/*
-+ * Copyright (C) 2016 Icenowy Zheng <icenowy@aosc.xyz>
-+ *
-+ * Based on sun8i-h3-orangepi-one.dts, which is:
-+ *   Copyright (C) 2016 Hans de Goede <hdegoede@redhat.com>
-+ *
-+ * This file is dual-licensed: you can use it either under the terms
-+ * of the GPL or the X11 license, at your option. Note that this dual
-+ * licensing only applies to this file, and not this project as a
-+ * whole.
-+ *
-+ *  a) This file is free software; you can redistribute it and/or
-+ *     modify it under the terms of the GNU General Public License as
-+ *     published by the Free Software Foundation; either version 2 of the
-+ *     License, or (at your option) any later version.
-+ *
-+ *     This file is distributed in the hope that it will be useful,
-+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *     GNU General Public License for more details.
-+ *
-+ * Or, alternatively,
-+ *
-+ *  b) Permission is hereby granted, free of charge, to any person
-+ *     obtaining a copy of this software and associated documentation
-+ *     files (the "Software"), to deal in the Software without
-+ *     restriction, including without limitation the rights to use,
-+ *     copy, modify, merge, publish, distribute, sublicense, and/or
-+ *     sell copies of the Software, and to permit persons to whom the
-+ *     Software is furnished to do so, subject to the following
-+ *     conditions:
-+ *
-+ *     The above copyright notice and this permission notice shall be
-+ *     included in all copies or substantial portions of the Software.
-+ *
-+ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-+ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-+ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-+ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-+ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-+ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-+ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-+ *     OTHER DEALINGS IN THE SOFTWARE.
-+ */
-+
-+/dts-v1/;
-+#include "sun8i-h3.dtsi"
-+#include "sunxi-common-regulators.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+
-+/ {
-+	model = "Xunlong Orange Pi Zero";
-+	compatible = "xunlong,orangepi-zero", "allwinner,sun8i-h2-plus";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		/* ethernet0 is the H3 emac, defined in sun8i-h3.dtsi */
-+		ethernet1 = &xr819;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		pwr_led {
-+			label = "orangepi:green:pwr";
-+			gpios = <&r_pio 0 10 GPIO_ACTIVE_HIGH>;
-+			default-state = "on";
-+		};
-+
-+		status_led {
-+			label = "orangepi:red:status";
-+			gpios = <&pio 0 17 GPIO_ACTIVE_HIGH>;
-+		};
-+	};
-+
-+	vdd_wifi: vdd_wifi {
-+		compatible = "regulator-fixed";
-+		regulator-name = "wifi";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		gpio = <&pio 0 20 GPIO_ACTIVE_HIGH>;
-+		startup-delay-us = <70000>;
-+		enable-active-high;
-+	};
-+
-+	pwrseq_wifi: pwrseq_wifi@0 {
-+		compatible = "mmc-pwrseq-simple";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wifi_rst>;
-+		reset-gpios = <&r_pio 0 7 GPIO_ACTIVE_LOW>;
-+		post-power-on-delay-ms = <50>;
-+	};
-+};
-+
-+&ehci0 {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&mmc0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&mmc0_pins_a>;
-+	vmmc-supply = <&reg_vcc3v3>;
-+	bus-width = <4>;
-+	cd-gpios = <&pio 5 6 GPIO_ACTIVE_HIGH>; /* PF6 */
-+	cd-inverted;
-+	status = "okay";
-+};
-+
-+&mmc1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&mmc1_pins_a>;
-+	vmmc-supply = <&reg_vcc3v3>;
-+	vqmmc-supply = <&vdd_wifi>;
-+	mmc-pwrseq = <&pwrseq_wifi>;
-+	bus-width = <4>;
-+	max-frequency = <16000000>;
-+	non-removable;
-+	status = "okay";
-+
-+	/*
-+	 * Explicitly define the sdio device, so that we can add an ethernet
-+	 * alias for it (which e.g. makes u-boot set a mac-address).
-+	 */
-+	xr819: sdio_wifi@1 {
-+		reg = <1>;
-+		compatible = "xradio,xr819";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wifi_wake>;
-+		interrupt-parent = <&pio>;
-+		interrupts = <6 10 IRQ_TYPE_EDGE_RISING>;
-+		interrupt-names = "host-wake";
-+		local-mac-address = [dc 44 6d c0 ff ee];
-+	};
-+};
-+
-+&pio {
-+	wifi_wake: wifi_wake {
-+		pins = "PG10";
-+		function = "gpio_in";
-+    };
-+};
-+
-+&r_pio {
-+	wifi_rst: wifi_rst {
-+		pins = "PL7";
-+		function = "gpio_out";
-+    };
-+};
-+
-+&mmc1_pins_a {
-+	bias-pull-up;
-+};
-+
-+&ohci0 {
-+	status = "okay";
-+};
-+
-+&ohci1 {
-+	status = "okay";
-+};
-+
-+&uart0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_pins_a>;
-+	status = "okay";
-+};
-+
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>;
-+	status = "disabled";
-+};
-+
-+&uart2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart2_pins>;
-+	status = "disabled";
-+};
-+
-+&usb_otg {
-+	dr_mode = "peripheral";
-+	status = "okay";
-+};
-+
-+&usbphy {
-+	/*
-+	 * USB Type-A port VBUS is always on. However, MicroUSB VBUS can only
-+	 * power up the board; when it's used as OTG port, this VBUS is
-+	 * always off even if the board is powered via GPIO pins.
-+	 */
-+	status = "okay";
-+	usb0_id_det-gpios = <&pio 6 12 GPIO_ACTIVE_HIGH>; /* PG12 */
-+};
 diff --git a/drivers/net/wireless/xradio/tx.c b/drivers/net/wireless/xradio/tx.c
 new file mode 100644
-index 000000000000..9debfc1099a4
+index 0000000..9debfc1
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/tx.c
 @@ -0,0 +1,1454 @@
@@ -13344,7 +13097,7 @@ index 000000000000..9debfc1099a4
 +#endif
 diff --git a/drivers/net/wireless/xradio/tx.h b/drivers/net/wireless/xradio/tx.h
 new file mode 100644
-index 000000000000..b5cbccff5dde
+index 0000000..b5cbccf
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/tx.h
 @@ -0,0 +1,88 @@
@@ -13438,7 +13191,7 @@ index 000000000000..b5cbccff5dde
 +#endif /* XRADIO_TXRX_H */
 diff --git a/drivers/net/wireless/xradio/wsm.c b/drivers/net/wireless/xradio/wsm.c
 new file mode 100644
-index 000000000000..7c75eef31cb4
+index 0000000..7c75eef
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/wsm.c
 @@ -0,0 +1,3004 @@
@@ -16448,7 +16201,7 @@ index 000000000000..7c75eef31cb4
 +}
 diff --git a/drivers/net/wireless/xradio/wsm.h b/drivers/net/wireless/xradio/wsm.h
 new file mode 100644
-index 000000000000..8056abce1f05
+index 0000000..8056abc
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/wsm.h
 @@ -0,0 +1,2354 @@
@@ -18808,7 +18561,7 @@ index 000000000000..8056abce1f05
 +#endif /* XRADIO_HWIO_H_INCLUDED */
 diff --git a/drivers/net/wireless/xradio/xradio.h b/drivers/net/wireless/xradio/xradio.h
 new file mode 100644
-index 000000000000..d565db086099
+index 0000000..d565db0
 --- /dev/null
 +++ b/drivers/net/wireless/xradio/xradio.h
 @@ -0,0 +1,577 @@
@@ -19389,25 +19142,6 @@ index 000000000000..d565db086099
 +}
 +
 +#endif /* XRADIO_H */
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 3871998059de..494932a815b7 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -738,12 +738,12 @@ static bool regdb_has_valid_signature(const u8 *data, unsigned int size)
- 
- 	if (request_firmware(&sig, "regulatory.db.p7s", &reg_pdev->dev))
- 		return false;
--
-+/*
- 	result = verify_pkcs7_signature(data, size, sig->data, sig->size,
- 					builtin_regdb_keys,
- 					VERIFYING_UNSPECIFIED_SIGNATURE,
- 					NULL, NULL) == 0;
--
-+*/
- 	release_firmware(sig);
- 
- 	return result;
 -- 
 2.11.0
 
