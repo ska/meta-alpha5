@@ -3,15 +3,18 @@ SUMMARY = "Domoticz is a Home Automation system design to control various device
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://License.txt;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS = "lua sqlite3 boost curl openssl libusb zlib"
+DEPENDS = "curl openssl boost zlib python3"
+RDEPENDS_${PN} = " curl python3"
 
-inherit cmake pkgconfig useradd systemd
+inherit cmake pkgconfig useradd update-rc.d python-dir
+DEPENDS = "curl openssl boost zlib python3"
+RDEPENDS_${PN} = " curl python3"
 
 PV = "3.8153+git${SRCPV}"
-
 SRCREV = "494fff71685f319b25e7824684c299162b19f8c3"
-SRC_URI = "git://github.com/domoticz/domoticz.git;protocol=https \
-          "
+SRC_URI = " git://github.com/domoticz/domoticz.git;protocol=https \
+            file://domoticz.sh \
+"
 
 S = "${WORKDIR}/git"
 
@@ -20,36 +23,21 @@ EXTRA_OECMAKE = " -DBOOST_INCLUDEDIR=${STAGING_INCDIR} \
                   -DOPENSSL_LIBRARIES=${STAGING_LIBDIR} \
                   -DCURL_LIBRARIES=${STAGING_LIBDIR} \
                   -DCURL_INCLUDE_DIR=${STAGING_INCDIR} \
+                  -DCMAKE_INSTALL_PREFIX=/home/domoticz \
                 "
 
-
-do_install_append() {
-    # The domoticz manual says "run from git checkout", but we don't tolerate such nonsense
-    # and since 'make install' doesn't work properly, we do some massaging.
-    install -d ${D}/foo
-    mv ${D}${prefix}/* ${D}/foo
-    install -d ${D}${localstatedir}/lib/domoticz
-    mv ${D}/foo/* ${D}${localstatedir}/lib/domoticz
-    rmdir ${D}/foo
-
-    chown -R domoticz ${D}${localstatedir}/lib
-
-    rmdir ${D}${prefix}
-}
-
-FILES_${PN}-dbg += "${localstatedir}/lib/domoticz/.debug/"
-
-SYSTEMD_SERVICE_${PN} = "domoticz.service"
+FILES_${PN}-dbg     += "${localstatedir}/lib/domoticz/.debug/"
+FILES_${PN}         += "/home/domoticz/* ${sysconfdir}/init.d/domoticz.sh"
+INITSCRIPT_NAME     =  "domoticz.sh"
+INITSCRIPT_PARAMS   =  "defaults 80 70"
 
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = " \
-    --system --no-create-home \
-    --home ${localstatedir}/lib/domoticz \
-    --groups dialout \
-    --user-group domoticz"
+USERADD_PARAM_${PN} = "-u 1200 -d /home/domoticz -r -s /bin/sh -P 'domoticz' -g domoticz domoticz"
+GROUPADD_PARAM_${PN} = "-g 880 domoticz"
 
-# Domoticz is mostly used in combination with a smart meter (ftdi dongles) or an rftrxx (acm based).
-RRECOMMENDS_${PN} += "python3 \
-                      kernel-module-cdc-acm \
-                      kernel-module-usbserial \
-                     "
+do_install_append () {
+	mkdir -p ${D}/${sysconfdir}/init.d
+	install -m 0755 ${WORKDIR}/domoticz.sh ${D}/${sysconfdir}/init.d
+    chown -R domoticz ${D}/home/domoticz
+    chgrp -R domoticz ${D}/home/domoticz
+}
