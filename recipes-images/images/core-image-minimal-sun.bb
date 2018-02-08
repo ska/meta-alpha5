@@ -25,6 +25,8 @@ TOOLS = "\
     procps \
     strace \
     usbutils \
+    e2fsprogs \
+    e2fsprogs-mke2fs \
 "
 WIFITOOLS = "\
     iw \
